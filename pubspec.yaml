@@ -1,9 +1,9 @@
 name: gt_api
 description: A robust and elegant API client wrapper for Flutter and Dart applications to streamline RESTful API integrations.
 version: 1.2.0
-homepage: https://github.com/gauravtechnical/gt_api
-repository: https://github.com/gauravtechnical/gt_api
-issue_tracker: https://github.com/gauravtechnical/gt_api/issues
+homepage: https://github.com/GauravTechnical24/gt_api
+repository: https://github.com/GauravTechnical24/gt_api
+issue_tracker: https://github.com/GauravTechnical24/gt_api/issues
 
 environment:
   sdk: ">=3.12.0 <4.0.0"
