@@ -39,7 +39,9 @@ class ApiService {
     );
 
     // Add retry interceptor
-    _dio.interceptors.add(RetryInterceptor(config: _config, logger: _logger));
+    _dio.interceptors.add(
+      RetryInterceptor(config: _config, logger: _logger, dio: _dio),
+    );
 
     // Initialize download helper
     _downloadHelper = DownloadHelper(
@@ -217,10 +219,7 @@ class ApiService {
       }
 
       // Merge headers
-      final mergedHeaders = {
-        ..._config.globalHeaders,
-        ...?headers,
-      };
+      final mergedHeaders = {..._config.globalHeaders, ...?headers};
 
       // Prepare options
       final options = Options(

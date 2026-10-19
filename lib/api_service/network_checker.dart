@@ -11,7 +11,7 @@ class NetworkChecker {
 
   final Connectivity _connectivity = Connectivity();
   StreamSubscription<List<ConnectivityResult>>? _subscription;
-  final StreamController<bool> _connectionStatusController =
+  StreamController<bool> _connectionStatusController =
       StreamController<bool>.broadcast();
 
   /// Stream of connection status changes
@@ -23,6 +23,14 @@ class NetworkChecker {
 
   /// Initialize network checker and listen to connectivity changes
   Future<void> initialize() async {
+    // Re-create controller if previously closed
+    if (_connectionStatusController.isClosed) {
+      _connectionStatusController = StreamController<bool>.broadcast();
+    }
+
+    // Cancel existing subscription if any to prevent duplicate listeners
+    await _subscription?.cancel();
+
     // Check initial connectivity
     await checkConnectivity();
 
@@ -42,7 +50,9 @@ class NetworkChecker {
       return _isConnected;
     } catch (e) {
       _isConnected = false;
-      _connectionStatusController.add(false);
+      if (!_connectionStatusController.isClosed) {
+        _connectionStatusController.add(false);
+      }
       return false;
     }
   }
@@ -62,7 +72,7 @@ class NetworkChecker {
     );
 
     // Notify listeners if status changed
-    if (wasConnected != _isConnected) {
+    if (wasConnected != _isConnected && !_connectionStatusController.isClosed) {
       _connectionStatusController.add(_isConnected);
     }
   }

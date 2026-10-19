@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'dart:io' show Platform;
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart' show kDebugMode, debugPrint;
+import 'package:flutter/foundation.dart'
+    show kDebugMode, debugPrint, kIsWeb, defaultTargetPlatform, TargetPlatform;
 
 /// API Logger for beautiful console output
 /// Provides detailed logging for requests and responses
@@ -21,7 +21,9 @@ class ApiLogger {
       // Disable colors in Flutter debug mode to avoid ANSI escape sequence issues in IDE consoles (e.g., VSCode)
       if (kDebugMode) return false;
       // Disable on Windows by default (unless explicitly enabled)
-      if (Platform.isWindows) return false;
+      if (!kIsWeb && defaultTargetPlatform == TargetPlatform.windows) {
+        return false;
+      }
       // Enable colors on Linux and macOS (terminal)
       return true;
     } catch (e) {

@@ -1,3 +1,10 @@
+/// A robust, elegant, and production-ready HTTP/REST API client wrapper for Flutter and Dart.
+///
+/// Exports core components including [ApiService], [ApiConfig], [ApiException],
+/// [ApiResponse], [ApiLogger], [NetworkChecker], [RetryInterceptor],
+/// [FormDataHelper], and [DownloadHelper].
+library;
+
 // Core API Service exports
 export 'api_service/api_service.dart';
 export 'api_service/api_config.dart';

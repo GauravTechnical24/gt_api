@@ -56,6 +56,12 @@ class ApiException implements Exception {
         type = ApiExceptionType.receiveTimeout;
         break;
 
+      case DioExceptionType.transformTimeout:
+        message =
+            'Request or response transformation timed out. Please try again.';
+        type = ApiExceptionType.timeout;
+        break;
+
       case DioExceptionType.badResponse:
         statusCode = error.response?.statusCode;
         errorData = error.response?.data is Map
@@ -70,22 +76,30 @@ class ApiException implements Exception {
             type = ApiExceptionType.badRequest;
             break;
           case 401:
-            message = 'Unauthorized. Please login again.';
+            message =
+                _extractErrorMessage(error.response?.data) ??
+                'Unauthorized. Please login again.';
             type = ApiExceptionType.unauthorized;
             break;
           case 403:
             message =
+                _extractErrorMessage(error.response?.data) ??
                 'Forbidden. You don\'t have permission to access this resource.';
             type = ApiExceptionType.forbidden;
             break;
           case 404:
-            message = 'Resource not found.';
+            message =
+                _extractErrorMessage(error.response?.data) ??
+                'Resource not found.';
             type = ApiExceptionType.notFound;
             break;
           case 500:
           case 502:
           case 503:
-            message = 'Server error. Please try again later.';
+          case 504:
+            message =
+                _extractErrorMessage(error.response?.data) ??
+                'Server error. Please try again later.';
             type = ApiExceptionType.internalServerError;
             break;
           default:

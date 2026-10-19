@@ -1,62 +1,82 @@
 /// Global API Configuration Class
 /// This class manages all API settings including base URL, headers, timeouts, and more.
 class ApiConfig {
-  /// Singleton instance
+  /// Internal singleton instance of [ApiConfig]
   static final ApiConfig _instance = ApiConfig._internal();
+
+  /// Returns the singleton instance of [ApiConfig].
   factory ApiConfig() => _instance;
   ApiConfig._internal();
 
-  /// Base URL for all API calls
   String _baseUrl = '';
+
+  /// Base URL for all API calls.
   String get baseUrl => _baseUrl;
 
-  /// Global headers applied to all requests
   Map<String, dynamic> _globalHeaders = {};
+
+  /// Global headers applied to all requests.
   Map<String, dynamic> get globalHeaders => _globalHeaders;
 
-  /// Authentication token
   String? _token;
+
+  /// Authentication token used for Authorization headers.
   String? get token => _token;
 
-  /// Request timeout duration
   Duration _connectTimeout = const Duration(seconds: 30);
+
+  /// Connect timeout duration.
   Duration get connectTimeout => _connectTimeout;
 
   Duration _receiveTimeout = const Duration(seconds: 30);
+
+  /// Receive timeout duration.
   Duration get receiveTimeout => _receiveTimeout;
 
   Duration _sendTimeout = const Duration(seconds: 30);
+
+  /// Send timeout duration.
   Duration get sendTimeout => _sendTimeout;
 
-  /// Enable/disable console logs
   bool _enableLogs = true;
+
+  /// Whether console logs are enabled.
   bool get enableLogs => _enableLogs;
 
-  /// Retry configuration
   bool _enableRetry = false;
+
+  /// Whether automatic retries are enabled.
   bool get enableRetry => _enableRetry;
 
   int _retryCount = 3;
+
+  /// Maximum number of retry attempts.
   int get retryCount => _retryCount;
 
   Duration _retryDelay = const Duration(seconds: 2);
+
+  /// Delay duration between retries.
   Duration get retryDelay => _retryDelay;
 
-  /// Exponential backoff for retry delays
   bool _exponentialBackoff = false;
+
+  /// Whether exponential backoff is used for retry delays.
   bool get exponentialBackoff => _exponentialBackoff;
 
-  /// Global exception handler callback
   Function(dynamic exception)? _globalExceptionHandler;
+
+  /// Global exception handler callback.
   Function(dynamic exception)? get globalExceptionHandler =>
       _globalExceptionHandler;
 
-  /// Callback for unauthorized responses (401)
   Function()? _onUnauthorized;
+
+  /// Callback for unauthorized responses (401).
   Function()? get onUnauthorized => _onUnauthorized;
 
-  /// Check internet before API call
   bool _checkInternetBeforeCall = true;
+
+  /// Whether to verify internet connectivity before making API calls.
   bool get checkInternetBeforeCall => _checkInternetBeforeCall;
 
   /// Initialize configuration with required parameters

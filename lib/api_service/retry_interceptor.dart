@@ -6,8 +6,9 @@ import 'logger.dart';
 class RetryInterceptor extends Interceptor {
   final ApiConfig config;
   final ApiLogger logger;
+  final Dio? dio;
 
-  RetryInterceptor({required this.config, required this.logger});
+  RetryInterceptor({required this.config, required this.logger, this.dio});
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
@@ -59,8 +60,9 @@ class RetryInterceptor extends Interceptor {
     newOptions.extra['currentRetry'] = currentRetry + 1;
 
     try {
-      // Retry the request
-      final response = await Dio().fetch(newOptions);
+      // Retry the request using configured dio instance or new fallback instance
+      final client = dio ?? Dio();
+      final response = await client.fetch(newOptions);
       return handler.resolve(response);
     } on DioException catch (e) {
       // If retry also fails, pass it to error handler again
@@ -74,6 +76,7 @@ class RetryInterceptor extends Interceptor {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
+      case DioExceptionType.transformTimeout:
         // Retry on timeout errors
         return true;
 
