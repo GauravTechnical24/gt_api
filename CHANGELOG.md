@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] - 2026-10-19
+
+### Fixed
+- Corrected GitHub repository and issue tracker URLs to point to `https://github.com/GauravTechnical24/gt_api` (resolving pub.dev 404 page not found).
+- Enhanced example application with Material 3 Dark and Light modes, responsive console controls, and categorized networking action cards.
+
 ## [1.2.0] - 2026-10-17
 
 ### Added
